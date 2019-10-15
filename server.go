@@ -15,6 +15,9 @@ type Server struct {
 	ID        string
 	CrashesAt time.Time
 }
+type CrashTimeRange struct {
+	min,max int
+}
 
 func (s Server) marcoPolo(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
@@ -59,12 +62,12 @@ func runtimeID() string {
 }
 
 func main() {
-	delay, err := rand.Int(rand.Reader, big.NewInt(900))
+	delay, err := rand.Int(rand.Reader, big.NewInt(5400))
 	if err != nil {
 		panic(err)
 	}
 
-	crashesAt := time.Now().Add(time.Second * time.Duration(delay.Uint64()+100))
+	crashesAt := time.Now().Add(time.Second * time.Duration(delay.Uint64()+1500))
 
 	srv := Server{
 		ID:        runtimeID(),
